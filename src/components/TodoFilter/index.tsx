@@ -1,4 +1,3 @@
-export * from './TodoFilter';
 import React from 'react';
 
 type Status = 'all' | 'active' | 'completed';

@@ -24,7 +24,7 @@ export const App: React.FC = () => {
     setIsLoadingTodos(true);
 
     getTodos()
-      .then(setTodos)
+      .then(result => setTodos(result))
       .finally(() => setIsLoadingTodos(false));
   }, []);
 
@@ -34,7 +34,7 @@ export const App: React.FC = () => {
     setIsLoadingUser(true);
 
     getUser(todo.userId)
-      .then(setSelectedUser)
+      .then(result => setSelectedUser(result))
       .finally(() => setIsLoadingUser(false));
   };
 

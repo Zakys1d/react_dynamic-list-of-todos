@@ -1,20 +1,23 @@
 import { Todo } from './types/Todo';
 import { User } from './types/User';
 
-const BASE_URL = 'https://mate.academy/students-api';
+const BASE_URL =
+  'https://mate-academy.github.io/react_dynamic-list-of-todos/api';
 
-function wait(delay: number) {
-  return new Promise(resolve => setTimeout(resolve, delay));
+function wait(delay: number): Promise<void> {
+  return new Promise(resolve => {
+    setTimeout(resolve, delay);
+  });
 }
 
-export function getTodos(): Promise<Todo[]> {
+function get<T>(url: string): Promise<T> {
+  const fullURL = BASE_URL + url + '.json';
+
   return wait(300)
-    .then(() => fetch(`${BASE_URL}/todos`))
+    .then(() => fetch(fullURL))
     .then(res => res.json());
 }
 
-export function getUser(userId: number): Promise<User> {
-  return wait(300)
-    .then(() => fetch(`${BASE_URL}/users/${userId}`))
-    .then(res => res.json());
-}
+export const getTodos = () => get<Todo[]>('/todos');
+
+export const getUser = (userId: number) => get<User>(`/users/${userId}`);
