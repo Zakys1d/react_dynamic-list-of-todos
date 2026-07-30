@@ -1,8 +1,10 @@
 import React from 'react';
 
+type Status = 'all' | 'active' | 'completed';
+
 type Props = {
-  status: 'all' | 'active' | 'completed';
-  onStatusChange: (status: 'all' | 'active' | 'completed') => void;
+  status: Status;
+  onStatusChange: (status: Status) => void;
   query: string;
   onQueryChange: (query: string) => void;
   onClearQuery: () => void;
@@ -15,6 +17,10 @@ export const TodoFilter: React.FC<Props> = ({
   onQueryChange,
   onClearQuery,
 }) => {
+  const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    onStatusChange(event.target.value as Status);
+  };
+
   return (
     <form className="field has-addons">
       <p className="control">
@@ -22,9 +28,7 @@ export const TodoFilter: React.FC<Props> = ({
           <select
             data-cy="statusSelect"
             value={status}
-            onChange={e =>
-              onStatusChange(e.target.value as 'all' | 'active' | 'completed')
-            }
+            onChange={handleStatusChange}
           >
             <option value="all">All</option>
             <option value="active">Active</option>
@@ -40,19 +44,19 @@ export const TodoFilter: React.FC<Props> = ({
           className="input"
           placeholder="Search..."
           value={query}
-          onChange={e => onQueryChange(e.target.value)}
+          onChange={event => onQueryChange(event.target.value)}
         />
 
         <span className="icon is-left">
           <i className="fas fa-magnifying-glass" />
         </span>
 
-        {query && (
+        {query.length > 0 && (
           <span className="icon is-right" style={{ pointerEvents: 'all' }}>
             <button
               type="button"
-              data-cy="clearSearchButton"
               className="delete"
+              data-cy="clearSearchButton"
               onClick={onClearQuery}
             />
           </span>
