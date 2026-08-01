@@ -1,6 +1,5 @@
 import React from 'react';
-
-type Status = 'all' | 'active' | 'completed';
+import { Status } from '../../types/Status';
 
 type Props = {
   status: Status;
@@ -18,7 +17,11 @@ export const TodoFilter: React.FC<Props> = ({
   onClearQuery,
 }) => {
   const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    onStatusChange(event.target.value as Status);
+    const { value } = event.target;
+
+    if (value === 'all' || value === 'active' || value === 'completed') {
+      onStatusChange(value);
+    }
   };
 
   return (
